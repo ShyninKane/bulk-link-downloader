@@ -18,17 +18,6 @@ collection), with a virtualized table so the UI stays responsive at that scale.
 
 Python 3 standard library only — no `pip install` needed.
 
-## Why Python, not pure HTML/JS
-
-Archive.org's redirect response (`archive.org/download/...`) sends
-`Access-Control-Allow-Origin: *`, but the actual file server it redirects to
-(`dnXXXX.ca.archive.org`) does **not** send CORS headers. That blocks a
-browser's `fetch()` from reading the response body, so a pure client-side page
-cannot verify sizes, show byte-level progress, or resume partial downloads for
-these links. The small Python backend does the actual HTTP requests
-server-side (no CORS involved there) and serves the UI on `localhost`, so the
-page talks to it same-origin.
-
 ## Run
 
 ```
@@ -48,7 +37,7 @@ This opens `http://127.0.0.1:8765/` in your browser automatically.
 
 ## "HTTP 401 Unauthorized" errors
 
-Some archive.org items are restricted to logged-in accounts — anonymous
+Some items may be restricted to logged-in accounts — anonymous
 requests to their `/download/...` links get a 401 even though the item page
 loads fine in your browser. To fix:
 
