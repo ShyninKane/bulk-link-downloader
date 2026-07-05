@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Bulk Link Downloader</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div id="toasts"></div>
+
+<header>
+  <h1>Bulk Link Downloader</h1>
+  <div id="conn-status" class="dim"></div>
+</header>
+
+<section class="panel">
+  <div class="row links-row">
+    <textarea id="links-input" placeholder="Paste one direct download link per line (e.g. https://archive.org/download/.../file.zip)&#10;~10,000 links supported."></textarea>
+    <div class="links-actions">
+      <input type="file" id="file-input" accept=".txt" />
+      <button id="load-btn">Load Links</button>
+      <span id="load-info" class="dim"></span>
+    </div>
+  </div>
+  <div class="row settings">
+    <label>Max retries <input type="number" id="max-retries" min="1" max="20" value="5" style="width:4em" /></label>
+    <label>Downloads folder <input type="text" id="downloads-dir" style="width:22em" /></label>
+    <label><input type="checkbox" id="enable-notify" /> Desktop notifications</label>
+  </div>
+  <div class="cookie-box">
+    <div class="cookie-label">Site cookie <span class="dim">(only needed if a download fails with "401 Unauthorized")</span></div>
+    <div class="cookie-input-row">
+      <input type="password" id="ia-cookie" placeholder="paste the Cookie header value from a logged-in browser tab" />
+      <span id="cookie-status" class="dim"></span>
+    </div>
+    <div class="cookie-help dim">
+      How to get it: log into the site in your browser, open DevTools → Network tab, reload the page, click any request to that site, and copy the full value of the <code>Cookie</code> request header.
+    </div>
+  </div>
+  <div class="row actions">
+    <button id="start-btn" class="primary">Start</button>
+    <button id="stop-btn">Stop</button>
+    <button id="retry-failed-btn">Retry Failed</button>
+    <a id="export-failed-btn" href="/api/export-failed">Export Failed List</a>
+    <button id="reset-btn" class="danger">Clear All</button>
+  </div>
+</section>
+
+<section class="panel summary">
+  <div class="counts">
+    <span class="count total">Total: <b id="c-total">0</b></span>
+    <span class="count pending">Pending: <b id="c-pending">0</b></span>
+    <span class="count downloading">Downloading: <b id="c-downloading">0</b></span>
+    <span class="count downloaded">Downloaded: <b id="c-downloaded">0</b></span>
+    <span class="count failed">Failed: <b id="c-failed">0</b></span>
+    <span id="running-indicator" class="dim"></span>
+  </div>
+  <div class="progress-bar"><div id="progress-fill"></div></div>
+</section>
+
+<section class="panel table-controls">
+  <label>Filter
+    <select id="status-filter">
+      <option value="all">All</option>
+      <option value="pending">Pending</option>
+      <option value="downloading">Downloading</option>
+      <option value="downloaded">Downloaded</option>
+      <option value="failed">Failed</option>
+    </select>
+  </label>
+  <input type="text" id="search-input" placeholder="Search filename or URL..." />
+</section>
+
+<section class="table-wrap">
+  <div class="table-header">
+    <div class="col col-idx">#</div>
+    <div class="col col-id">Identifier</div>
+    <div class="col col-file">Filename</div>
+    <div class="col col-status">Status</div>
+    <div class="col col-progress">Progress</div>
+    <div class="col col-attempts">Attempts</div>
+    <div class="col col-error">Error</div>
+  </div>
+  <div id="viewport" class="viewport">
+    <div id="spacer" class="spacer"></div>
+    <div id="rows" class="rows"></div>
+  </div>
+</section>
+
+<script src="/app.js"></script>
+</body>
+</html>

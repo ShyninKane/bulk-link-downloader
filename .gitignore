@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+
+# runtime state and downloaded content — regenerated locally, not source
+state.json
+state.json.tmp
+downloads/
+
+# OS junk
+.DS_Store
+Thumbs.db
