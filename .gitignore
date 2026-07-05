@@ -1,6 +1,9 @@
 __pycache__/
 *.pyc
 
+# editor/tool-specific config, not part of the app
+.claude/
+
 # runtime state and downloaded content — regenerated locally, not source
 state.json
 state.json.tmp
